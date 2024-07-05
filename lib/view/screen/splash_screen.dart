@@ -1,3 +1,4 @@
+import 'package:event_app/view/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/view/screen/homePage.dart';
 
@@ -16,7 +17,7 @@ class _Splash_screenState extends State<Splash_screen> {
   }
 
   void initialization() async {
-    await Future.delayed(const Duration(milliseconds: 2000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => HomePage()));
   }
@@ -24,7 +25,7 @@ class _Splash_screenState extends State<Splash_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: primary,
       body: _buildBody(),
     );
   }

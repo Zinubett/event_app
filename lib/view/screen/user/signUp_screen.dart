@@ -1,19 +1,21 @@
-import 'package:event_app/view/screen/user/signUp_screen.dart';
+import 'package:event_app/view/screen/user/signIn_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class SignIn_screen extends StatefulWidget {
+class SignUp_screen extends StatefulWidget {
   @override
-  _SignIn_screenState createState() => _SignIn_screenState();
+  _SignUp_screenState createState() => _SignUp_screenState();
 }
 
-class _SignIn_screenState extends State<SignIn_screen> {
+class _SignUp_screenState extends State<SignUp_screen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController pwdController = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
+  TextEditingController confirmPwdController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +24,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
     );
   }
 
+  bool obscureText1 = true;
   bool obscureText = true;
   bool checkedValue = false;
   _buildBody() {
@@ -37,7 +40,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
               height: 25,
             ),
             const CustomText(
-                text: 'Sign in',
+                text: 'Sign up',
                 alignment: Alignment.centerLeft,
                 textColor: black,
                 fontSize: 32,
@@ -49,7 +52,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
               height: 10,
             ),
             const CustomText(
-                text: 'Sign in to your account if you already have one.',
+                text: 'Sign up now to start planning your next event',
                 textColor: black,
                 alignment: Alignment.centerLeft,
                 fontSize: 14,
@@ -58,10 +61,50 @@ class _SignIn_screenState extends State<SignIn_screen> {
                 paddingLeft: 0,
                 paddingRight: 40),
             const SizedBox(
-              height: 40,
+              height: 30,
             ),
             Column(
               children: [
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                      fillColor: formColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey.shade100, width: 1),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      hintText: 'Name*',
+                      hintStyle: const TextStyle(
+                          fontSize: 16, color: gray, fontFamily: 'DMSans')),
+                  style: const TextStyle(
+                      fontSize: 16, color: gray, fontFamily: 'DMSans'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                      fillColor: formColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey.shade100, width: 1),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      hintText: 'Username*',
+                      hintStyle: const TextStyle(
+                          fontSize: 16, color: gray, fontFamily: 'DMSans')),
+                  style: const TextStyle(
+                      fontSize: 16, color: gray, fontFamily: 'DMSans'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -73,14 +116,14 @@ class _SignIn_screenState extends State<SignIn_screen> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                       ),
-                      hintText: 'Email',
+                      hintText: 'Email*',
                       hintStyle: const TextStyle(
                           fontSize: 16, color: gray, fontFamily: 'DMSans')),
                   style: const TextStyle(
                       fontSize: 16, color: gray, fontFamily: 'DMSans'),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 TextField(
                   controller: pwdController,
@@ -94,7 +137,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5)),
                       ),
-                      hintText: 'Password',
+                      hintText: 'Password*',
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -112,57 +155,46 @@ class _SignIn_screenState extends State<SignIn_screen> {
                   style: const TextStyle(
                       fontSize: 16, color: gray, fontFamily: 'DMSans'),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: screenWidth * 2 / 5,
-                  child: CheckboxListTile(
-                      title: const CustomText(
-                        text: 'Stay Logged in',
-                        alignment: Alignment.centerLeft,
-                        textColor: black,
-                        fontFamily: 'DMSans',
-                        fontSize: 12,
-                        align: TextAlign.center,
-                        paddingLeft: 5,
-                        paddingRight: 5,
-                      ),
-                      contentPadding: EdgeInsets.only(right: 0),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: checkedValue,
-                      activeColor: primary,
-                      onChanged: (val) {
-                        setState(() {
-                          checkedValue = val!;
-                        });
-                      }),
+                const SizedBox(
+                  height: 10,
                 ),
-                Expanded(child: Container()),
-                GestureDetector(
-                  onTap: () {},
-                  child: const CustomText(
-                    text: 'Forgot password?',
-                    alignment: Alignment.centerRight,
-                    textColor: primary,
-                    fontFamily: 'DMSans',
-                    fontSize: 12,
-                    align: TextAlign.center,
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                  ),
-                )
+                TextField(
+                  controller: confirmPwdController,
+                  obscureText: obscureText1,
+                  decoration: InputDecoration(
+                      fillColor: formColor,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.grey.shade100, width: 0.5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      hintText: 'Confirm Password*',
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (obscureText1 == true) {
+                              obscureText1 = false;
+                            } else {
+                              obscureText1 = true;
+                            }
+                          });
+                        },
+                        child: Icon(Icons.remove_red_eye_sharp),
+                      ),
+                      hintStyle: const TextStyle(
+                          fontSize: 16, color: gray, fontFamily: 'DMSans')),
+                  style: const TextStyle(
+                      fontSize: 16, color: gray, fontFamily: 'DMSans'),
+                ),
               ],
             ),
             const SizedBox(
               height: 30,
             ),
             const CustomButton(
-              text: 'Login',
+              text: 'Sign Up',
               imageUrl: "",
               buttonColor: primary,
               textColor: Colors.white,
@@ -172,7 +204,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
               isText: true,
             ),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             Container(
                 padding: EdgeInsets.only(right: 35, left: 35),
@@ -180,7 +212,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                 alignment: Alignment.center,
                 width: double.infinity,
                 child: const CustomText(
-                  text: "Login with ",
+                  text: "Sign Up with ",
                   alignment: Alignment.center,
                   textColor: gray,
                   fontSize: 14,
@@ -238,7 +270,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
               ],
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             SizedBox(
                 width: double.infinity,
@@ -247,13 +279,13 @@ class _SignIn_screenState extends State<SignIn_screen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUp_screen()));
+                              builder: (context) => SignIn_screen()));
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                          text: "Don’t have an account?",
+                          text: "Already have an account?",
                           textColor: gray,
                           alignment: Alignment.centerLeft,
                           fontSize: 14,
@@ -266,7 +298,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                           width: 5,
                         ),
                         CustomText(
-                          text: "Register now",
+                          text: "Login now",
                           textColor: primary,
                           alignment: Alignment.centerLeft,
                           fontSize: 14,

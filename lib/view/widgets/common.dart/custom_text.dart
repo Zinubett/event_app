@@ -6,14 +6,18 @@ class CustomText extends StatefulWidget {
   final String fontFamily;
   final double paddingLeft;
   final double paddingRight;
+  final Alignment alignment;
   final TextAlign align;
+  final Color textColor;
   const CustomText(
       {required this.text,
       required this.fontSize,
       required this.fontFamily,
       required this.align,
+      required this.alignment,
       required this.paddingLeft,
-      required this.paddingRight});
+      required this.paddingRight,
+      required this.textColor});
   @override
   _CustomTextState createState() => _CustomTextState();
 }
@@ -22,7 +26,7 @@ class _CustomTextState extends State<CustomText> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      alignment: widget.alignment,
       padding:
           EdgeInsets.only(left: widget.paddingLeft, right: widget.paddingRight),
       child: Text(widget.text,
@@ -30,7 +34,7 @@ class _CustomTextState extends State<CustomText> {
           textAlign: widget.align,
           style: TextStyle(
               fontSize: widget.fontSize,
-              color: Colors.white,
+              color: widget.textColor,
               fontFamily: widget.fontFamily,
               height: 1)),
     );

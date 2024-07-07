@@ -1,3 +1,4 @@
+import 'package:event_app/view/screen/user/signIn_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   CustomText(
                     fontSize: 32,
+                    textColor: Colors.white,
+                    alignment: Alignment.centerLeft,
                     fontFamily: 'DMSans',
                     align: TextAlign.start,
                     text: step == 1
@@ -62,6 +65,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   CustomText(
                     fontSize: 14,
+                    textColor: Colors.white,
+                    alignment: Alignment.centerLeft,
                     fontFamily: 'DMSans',
                     align: TextAlign.start,
                     text: step == 1
@@ -130,7 +135,13 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     if (step < 3) {
                       step = step + 1;
-                    } else if (step == 3) {}
+                    } else if (step == 3) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignIn_screen()),
+                      );
+                    }
                   });
                 },
                 child: Text(

@@ -1,4 +1,5 @@
 import 'package:event_app/view/screen/user/signIn_screen.dart';
+import 'package:event_app/view/screen/user/verification_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
@@ -27,6 +28,14 @@ class _SignUp_screenState extends State<SignUp_screen> {
   bool obscureText1 = true;
   bool obscureText = true;
   bool checkedValue = false;
+  onSignUp() {
+    setState(() {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => Verification_screen()));
+    });
+  }
+
+  onPressed() {}
   _buildBody() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -45,6 +54,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 textColor: black,
                 fontSize: 32,
                 fontFamily: 'DMSans',
+                fontWeight: FontWeight.w500,
                 align: TextAlign.start,
                 paddingLeft: 0,
                 paddingRight: 40),
@@ -55,6 +65,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 text: 'Sign up now to start planning your next event',
                 textColor: black,
                 alignment: Alignment.centerLeft,
+                fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'DMSans',
                 align: TextAlign.start,
@@ -193,10 +204,11 @@ class _SignUp_screenState extends State<SignUp_screen> {
             const SizedBox(
               height: 30,
             ),
-            const CustomButton(
+            CustomButton(
               text: 'Sign Up',
               imageUrl: "",
               buttonColor: primary,
+              onPressed: onSignUp,
               textColor: Colors.white,
               fontFamily: 'DMSans',
               buttonWidth: double.infinity,
@@ -214,6 +226,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 child: const CustomText(
                   text: "Sign Up with ",
                   alignment: Alignment.center,
+                  fontWeight: FontWeight.w400,
                   textColor: gray,
                   fontSize: 14,
                   fontFamily: 'DMSans',
@@ -224,7 +237,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Expanded(
                     child: CustomButton(
@@ -232,6 +245,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                   imageUrl: "images/facebook_ic.png",
                   fontFamily: 'DMSans',
                   buttonColor: stroke,
+                  onPressed: onPressed,
                   buttonWidth: 0,
                   textColor: black,
                   fontSize: 14,
@@ -246,6 +260,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                     imageUrl: "images/google.png",
                     fontFamily: 'DMSans',
                     fontSize: 14,
+                    onPressed: onPressed,
                     buttonColor: stroke,
                     buttonWidth: 0,
                     textColor: black,
@@ -261,6 +276,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                     imageUrl: "images/Apple.png",
                     fontFamily: 'DMSans',
                     fontSize: 14,
+                    onPressed: onPressed,
                     buttonColor: stroke,
                     buttonWidth: 0,
                     textColor: black,
@@ -288,6 +304,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                           text: "Already have an account?",
                           textColor: gray,
                           alignment: Alignment.centerLeft,
+                          fontWeight: FontWeight.w400,
                           fontSize: 14,
                           fontFamily: 'DMSans',
                           align: TextAlign.center,
@@ -301,6 +318,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                           text: "Login now",
                           textColor: primary,
                           alignment: Alignment.centerLeft,
+                          fontWeight: FontWeight.w400,
                           fontSize: 14,
                           fontFamily: 'DMSans',
                           align: TextAlign.center,

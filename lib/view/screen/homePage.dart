@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 32,
                     textColor: Colors.white,
                     alignment: Alignment.centerLeft,
+                    fontWeight: FontWeight.w700,
                     fontFamily: 'DMSans',
                     align: TextAlign.start,
                     text: step == 1
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 14,
                     textColor: Colors.white,
                     alignment: Alignment.centerLeft,
+                    fontWeight: FontWeight.w400,
                     fontFamily: 'DMSans',
                     align: TextAlign.start,
                     text: step == 1

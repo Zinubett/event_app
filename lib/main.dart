@@ -1,4 +1,5 @@
 import 'package:event_app/view/screen/splash_screen.dart';
+import 'package:event_app/view/theme/theme_color.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Event App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
       home: Splash_screen(),

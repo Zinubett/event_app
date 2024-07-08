@@ -10,6 +10,7 @@ class CustomButton extends StatefulWidget {
   final Color buttonColor;
   final Color textColor;
   final double buttonWidth;
+  final Function() onPressed;
 
   const CustomButton(
       {required this.text,
@@ -19,7 +20,8 @@ class CustomButton extends StatefulWidget {
       required this.buttonWidth,
       required this.imageUrl,
       required this.buttonColor,
-      required this.textColor});
+      required this.textColor,
+      required this.onPressed});
   @override
   _CustomButtonState createState() => _CustomButtonState();
 }
@@ -41,7 +43,9 @@ class _CustomButtonState extends State<CustomButton> {
                 side: BorderSide(color: Colors.black45, width: 1.5),
                 borderRadius: BorderRadius.circular(10.0),
               ))),
-          onPressed: () => null,
+          onPressed: () {
+            widget.onPressed();
+          },
           child: widget.isText == true
               ? CustomText(
                   text: widget.text,
@@ -49,6 +53,7 @@ class _CustomButtonState extends State<CustomButton> {
                   textColor: widget.textColor,
                   fontSize: widget.fontSize,
                   fontFamily: 'DMSans',
+                  fontWeight: FontWeight.w400,
                   align: TextAlign.center,
                   paddingLeft: 0,
                   paddingRight: 0,

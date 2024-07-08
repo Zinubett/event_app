@@ -22,6 +22,8 @@ class _SignIn_screenState extends State<SignIn_screen> {
     );
   }
 
+  _onLoginPressed() {}
+  _onPressed() {}
   bool obscureText = true;
   bool checkedValue = false;
   _buildBody() {
@@ -40,6 +42,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                 text: 'Sign in',
                 alignment: Alignment.centerLeft,
                 textColor: black,
+                fontWeight: FontWeight.w500,
                 fontSize: 32,
                 fontFamily: 'DMSans',
                 align: TextAlign.start,
@@ -51,6 +54,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
             const CustomText(
                 text: 'Sign in to your account if you already have one.',
                 textColor: black,
+                fontWeight: FontWeight.w400,
                 alignment: Alignment.centerLeft,
                 fontSize: 14,
                 fontFamily: 'DMSans',
@@ -125,6 +129,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                       title: const CustomText(
                         text: 'Stay Logged in',
                         alignment: Alignment.centerLeft,
+                        fontWeight: FontWeight.w400,
                         textColor: black,
                         fontFamily: 'DMSans',
                         fontSize: 12,
@@ -148,6 +153,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                   child: const CustomText(
                     text: 'Forgot password?',
                     alignment: Alignment.centerRight,
+                    fontWeight: FontWeight.w400,
                     textColor: primary,
                     fontFamily: 'DMSans',
                     fontSize: 12,
@@ -161,12 +167,13 @@ class _SignIn_screenState extends State<SignIn_screen> {
             const SizedBox(
               height: 30,
             ),
-            const CustomButton(
+            CustomButton(
               text: 'Login',
               imageUrl: "",
               buttonColor: primary,
               textColor: Colors.white,
               fontFamily: 'DMSans',
+              onPressed: _onLoginPressed,
               buttonWidth: double.infinity,
               fontSize: 16,
               isText: true,
@@ -182,6 +189,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                 child: const CustomText(
                   text: "Login with ",
                   alignment: Alignment.center,
+                  fontWeight: FontWeight.w400,
                   textColor: gray,
                   fontSize: 14,
                   fontFamily: 'DMSans',
@@ -192,7 +200,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
             const SizedBox(
               height: 10,
             ),
-            const Row(
+            Row(
               children: [
                 Expanded(
                     child: CustomButton(
@@ -201,11 +209,12 @@ class _SignIn_screenState extends State<SignIn_screen> {
                   fontFamily: 'DMSans',
                   buttonColor: stroke,
                   buttonWidth: 0,
+                  onPressed: _onPressed,
                   textColor: black,
                   fontSize: 14,
                   isText: false,
                 )),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Expanded(
@@ -214,13 +223,14 @@ class _SignIn_screenState extends State<SignIn_screen> {
                     imageUrl: "images/google.png",
                     fontFamily: 'DMSans',
                     fontSize: 14,
+                    onPressed: _onPressed,
                     buttonColor: stroke,
                     buttonWidth: 0,
                     textColor: black,
                     isText: false,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Expanded(
@@ -228,6 +238,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                     text: '',
                     imageUrl: "images/Apple.png",
                     fontFamily: 'DMSans',
+                    onPressed: _onPressed,
                     fontSize: 14,
                     buttonColor: stroke,
                     buttonWidth: 0,
@@ -259,6 +270,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                           fontSize: 14,
                           fontFamily: 'DMSans',
                           align: TextAlign.center,
+                          fontWeight: FontWeight.w400,
                           paddingLeft: 15,
                           paddingRight: 0,
                         ),
@@ -269,6 +281,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                           text: "Register now",
                           textColor: primary,
                           alignment: Alignment.centerLeft,
+                          fontWeight: FontWeight.w400,
                           fontSize: 14,
                           fontFamily: 'DMSans',
                           align: TextAlign.center,

@@ -17,11 +17,24 @@ class _Verification_screenState extends State<Verification_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _buildBody(),
+      body: isSubmit == false ? _buildBody() : congrats(),
     );
   }
 
-  onSubmit() {}
+  bool isSubmit = false;
+  bool isDone = false;
+  onSubmit() {
+    setState(() {
+      isSubmit = true;
+    });
+  }
+
+  onDone() {
+    setState(() {
+      isDone = true;
+    });
+  }
+
   bool _onEditing = true;
   String? _code;
   int secondsRemaining = 30;
@@ -167,6 +180,69 @@ class _Verification_screenState extends State<Verification_screen> {
                 paddingLeft: 0,
                 paddingRight: 0,
                 textColor: primary),
+          ],
+        ));
+  }
+
+  Widget congrats() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Padding(
+        padding: EdgeInsets.only(left: 15, right: 15),
+        child: Column(
+          children: [
+            SizedBox(
+              height: screenHeight * 1 / 4,
+            ),
+            Image(
+              image: isDone == false
+                  ? AssetImage("images/Successmark.png")
+                  : AssetImage("images/Frame.png"),
+              width: 200,
+              height: 200,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            CustomText(
+                text: isDone == false ? 'Congratulations!' : 'Welcome!',
+                alignment: Alignment.center,
+                fontWeight: FontWeight.w500,
+                textColor: primary,
+                fontSize: 24,
+                fontFamily: 'DMSans',
+                align: TextAlign.center,
+                paddingLeft: 0,
+                paddingRight: 0),
+            SizedBox(
+              height: 10,
+            ),
+            CustomText(
+                text: isDone == false
+                    ? 'Your email has been verified, you can now start'
+                    : 'Thanks for downloading our app! We’re actively working on enhancing our functionality in these early stages. You’re among the first users and we appreciate any feedback you have.',
+                alignment: Alignment.center,
+                fontWeight: FontWeight.w400,
+                textColor: black,
+                fontSize: 14,
+                fontFamily: 'DMSans',
+                align: TextAlign.center,
+                paddingLeft: isDone == false ? 65 : 0,
+                paddingRight: isDone == false ? 65 : 0),
+            const SizedBox(
+              height: 35,
+            ),
+            CustomButton(
+              text: isDone == false ? 'Done' : 'Okay',
+              imageUrl: "",
+              buttonColor: primary,
+              textColor: Colors.white,
+              onPressed: onDone,
+              fontFamily: 'DMSans',
+              buttonWidth: screenWidth * 2 / 3,
+              fontSize: 16,
+              isText: true,
+            ),
           ],
         ));
   }

@@ -78,17 +78,15 @@ class _SignUp_screenState extends State<SignUp_screen> {
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: InputDecoration(
-                      fillColor: formColor,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: stroke, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       hintText: 'Name*',
-                      hintStyle: const TextStyle(
+                      hintStyle: TextStyle(
                           fontSize: 16, color: gray, fontFamily: 'DMSans')),
                   style: const TextStyle(
                       fontSize: 16, color: gray, fontFamily: 'DMSans'),
@@ -98,17 +96,15 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 ),
                 TextField(
                   controller: usernameController,
-                  decoration: InputDecoration(
-                      fillColor: formColor,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: stroke, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       hintText: 'Username*',
-                      hintStyle: const TextStyle(
+                      hintStyle: TextStyle(
                           fontSize: 16, color: gray, fontFamily: 'DMSans')),
                   style: const TextStyle(
                       fontSize: 16, color: gray, fontFamily: 'DMSans'),
@@ -118,17 +114,15 @@ class _SignUp_screenState extends State<SignUp_screen> {
                 ),
                 TextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                      fillColor: formColor,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: stroke, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       hintText: 'Email*',
-                      hintStyle: const TextStyle(
+                      hintStyle: TextStyle(
                           fontSize: 16, color: gray, fontFamily: 'DMSans')),
                   style: const TextStyle(
                       fontSize: 16, color: gray, fontFamily: 'DMSans'),
@@ -140,13 +134,11 @@ class _SignUp_screenState extends State<SignUp_screen> {
                   controller: pwdController,
                   obscureText: obscureText,
                   decoration: InputDecoration(
-                      fillColor: formColor,
+                      fillColor: Colors.white,
                       filled: true,
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 0.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: stroke, width: 0.5),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       hintText: 'Password*',
                       suffixIcon: GestureDetector(
@@ -173,13 +165,11 @@ class _SignUp_screenState extends State<SignUp_screen> {
                   controller: confirmPwdController,
                   obscureText: obscureText1,
                   decoration: InputDecoration(
-                      fillColor: formColor,
+                      fillColor: Colors.white,
                       filled: true,
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 0.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: stroke, width: 0.5),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       hintText: 'Confirm Password*',
                       suffixIcon: GestureDetector(
@@ -244,7 +234,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                   text: '',
                   imageUrl: "images/facebook_ic.png",
                   fontFamily: 'DMSans',
-                  buttonColor: stroke,
+                  buttonColor: Colors.white,
                   onPressed: onPressed,
                   buttonWidth: 0,
                   textColor: black,
@@ -261,13 +251,13 @@ class _SignUp_screenState extends State<SignUp_screen> {
                     fontFamily: 'DMSans',
                     fontSize: 14,
                     onPressed: onPressed,
-                    buttonColor: stroke,
+                    buttonColor: Colors.white,
                     buttonWidth: 0,
                     textColor: black,
                     isText: false,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Expanded(
@@ -277,7 +267,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
                     fontFamily: 'DMSans',
                     fontSize: 14,
                     onPressed: onPressed,
-                    buttonColor: stroke,
+                    buttonColor: Colors.white,
                     buttonWidth: 0,
                     textColor: black,
                     isText: false,

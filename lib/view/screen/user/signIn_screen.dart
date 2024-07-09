@@ -68,14 +68,12 @@ class _SignIn_screenState extends State<SignIn_screen> {
               children: [
                 TextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                      fillColor: formColor,
+                  decoration: const InputDecoration(
+                      fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: stroke, width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       hintText: 'Email',
                       hintStyle: const TextStyle(
@@ -90,13 +88,11 @@ class _SignIn_screenState extends State<SignIn_screen> {
                   controller: pwdController,
                   obscureText: obscureText,
                   decoration: InputDecoration(
-                      fillColor: formColor,
+                      fillColor: Colors.white,
                       filled: true,
-                      border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey.shade100, width: 0.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: stroke, width: 0.5),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       hintText: 'Password',
                       suffixIcon: GestureDetector(
@@ -207,7 +203,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                   text: '',
                   imageUrl: "images/facebook_ic.png",
                   fontFamily: 'DMSans',
-                  buttonColor: stroke,
+                  buttonColor: Colors.white,
                   buttonWidth: 0,
                   onPressed: _onPressed,
                   textColor: black,
@@ -224,7 +220,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                     fontFamily: 'DMSans',
                     fontSize: 14,
                     onPressed: _onPressed,
-                    buttonColor: stroke,
+                    buttonColor: Colors.white,
                     buttonWidth: 0,
                     textColor: black,
                     isText: false,
@@ -240,7 +236,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                     fontFamily: 'DMSans',
                     onPressed: _onPressed,
                     fontSize: 14,
-                    buttonColor: stroke,
+                    buttonColor: Colors.white,
                     buttonWidth: 0,
                     textColor: black,
                     isText: false,

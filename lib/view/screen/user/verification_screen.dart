@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:event_app/view/screen/question/eventForm_screen.dart';
 import 'package:event_app/view/screen/user/signUp_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
@@ -26,6 +27,13 @@ class _Verification_screenState extends State<Verification_screen> {
   onSubmit() {
     setState(() {
       isSubmit = true;
+    });
+  }
+
+  onOkay() {
+    setState(() {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => EventForm_screen()));
     });
   }
 
@@ -237,7 +245,7 @@ class _Verification_screenState extends State<Verification_screen> {
               imageUrl: "",
               buttonColor: primary,
               textColor: Colors.white,
-              onPressed: onDone,
+              onPressed: isDone == false ? onDone : onOkay,
               fontFamily: 'DMSans',
               buttonWidth: screenWidth * 2 / 3,
               fontSize: 16,

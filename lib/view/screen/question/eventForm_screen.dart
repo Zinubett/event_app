@@ -1,4 +1,5 @@
 import 'package:event_app/Model/question_model.dart';
+import 'package:event_app/view/screen/Event/eventDetails.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
@@ -22,7 +23,7 @@ class _EventForm_screenState extends State<EventForm_screen> {
 
   int currentQuestion = 0;
   onNext() {
-    if (currentQuestion < sampleQuestions.length) {
+    if (currentQuestion + 1 < sampleQuestions.length) {
       setState(() {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 300),
@@ -30,6 +31,9 @@ class _EventForm_screenState extends State<EventForm_screen> {
         );
         currentQuestion++;
       });
+    } else {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EventDetails_screen()));
     }
   }
 
@@ -294,7 +298,7 @@ class _EventForm_screenState extends State<EventForm_screen> {
                                         ),
                                       )),
                             SizedBox(
-                              height: screenHeight * 1 / 3,
+                              height: screenHeight * 1 / 4,
                             ),
                             CustomButton(
                               text: 'Next',

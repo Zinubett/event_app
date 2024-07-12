@@ -24,14 +24,45 @@ class _GridView_itemState extends State<GridView_item> {
           color: Colors.white),
       child: Column(
         children: [
-          Container(
-            height: 82,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-              image: DecorationImage(
-                  image: AssetImage('images/event.png'), fit: BoxFit.cover),
-            ),
+          Stack(
+            children: [
+              Container(
+                height: 82,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12)),
+                  image: DecorationImage(
+                      image: AssetImage('images/event.png'), fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Image.asset('images/star.png'),
+                  const CustomText(
+                      text: '3.5',
+                      fontSize: 12,
+                      fontFamily: 'DMSans',
+                      align: TextAlign.start,
+                      alignment: Alignment.centerLeft,
+                      paddingLeft: 5,
+                      paddingRight: 0,
+                      fontWeight: FontWeight.w400,
+                      textColor: Colors.white),
+                  Expanded(child: Container()),
+                  Image.asset('images/save.png'),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                ],
+              )
+            ],
           ),
           const SizedBox(
             height: 15,

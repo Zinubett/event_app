@@ -5,6 +5,8 @@ import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:intl/intl.dart';
 
 class EventForm_screen extends StatefulWidget {
   @override
@@ -21,22 +23,30 @@ class _EventForm_screenState extends State<EventForm_screen> {
     );
   }
 
+  String errMessage = 'you should answer to the question first!';
   int currentQuestion = 0;
   onNext() {
-    if (currentQuestion + 1 < sampleQuestions.length) {
-      setState(() {
-        _pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-        );
-        currentQuestion++;
-      });
+    if (sampleQuestions[currentQuestion].answer != '') {
+      if (currentQuestion + 1 < sampleQuestions.length) {
+        setState(() {
+          _pageController.nextPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+          );
+          currentQuestion++;
+        });
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EventDetails_screen()));
+      }
     } else {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => EventDetails_screen()));
+      setState(() {
+        sampleQuestions[currentQuestion].errMessage = errMessage;
+      });
     }
   }
 
+  DateTime newDateTime = DateTime.now();
   final PageController _pageController = PageController();
   AppBar _buildAppBar() {
     return AppBar(
@@ -118,9 +128,8 @@ class _EventForm_screenState extends State<EventForm_screen> {
                             sampleQuestions[index].isDataEnter == true
                                 ? TextField(
                                     controller: answerController,
-                                    onChanged: (value) {
-                                      sampleQuestions[index].answer = value;
-                                    },
+                                    onChanged: (value) {},
+                                    readOnly: true,
                                     decoration: InputDecoration(
                                         fillColor: Colors.white,
                                         filled: true,
@@ -132,7 +141,35 @@ class _EventForm_screenState extends State<EventForm_screen> {
                                         ),
                                         hintText: 'Enter the event date',
                                         suffixIcon: GestureDetector(
-                                          onTap: () {},
+                                          onTap: () async {
+                                            newDateTime =
+                                                (await showRoundedDatePicker(
+                                              height: screenHeight * 1 / 3,
+                                              context: context,
+                                              theme: ThemeData(
+                                                colorScheme:
+                                                    ColorScheme.fromSeed(
+                                                        seedColor: primary),
+                                                useMaterial3: true,
+                                              ),
+                                              initialDate: DateTime.now(),
+                                              firstDate:
+                                                  DateTime(DateTime.now().year),
+                                              lastDate: DateTime(
+                                                  DateTime.now().year + 3),
+                                              borderRadius: 16,
+                                            ))!;
+                                            var outputFormat =
+                                                DateFormat('MM/dd/yyyy');
+                                            var outputDate = outputFormat
+                                                .format(newDateTime);
+                                            answerController.text =
+                                                outputDate.toString();
+                                            setState(() {
+                                              sampleQuestions[index].answer =
+                                                  answerController.text;
+                                            });
+                                          },
                                           child: const Icon(
                                             Icons.date_range_rounded,
                                             color: primary,
@@ -311,6 +348,19 @@ class _EventForm_screenState extends State<EventForm_screen> {
                               fontSize: 16,
                               isText: true,
                             ),
+                            sampleQuestions[currentQuestion].errMessage == ''
+                                ? Container()
+                                : CustomText(
+                                    text: sampleQuestions[currentQuestion]
+                                        .errMessage,
+                                    fontSize: 15,
+                                    fontFamily: 'DMSans',
+                                    align: TextAlign.center,
+                                    alignment: Alignment.center,
+                                    paddingLeft: 0,
+                                    paddingRight: 0,
+                                    fontWeight: FontWeight.w400,
+                                    textColor: Colors.red),
                           ]);
                     }))
           ],

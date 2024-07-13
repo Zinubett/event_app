@@ -21,12 +21,17 @@ class _Verification_screenState extends State<Verification_screen> {
     );
   }
 
+  String errorMessage = "";
   bool isSubmit = false;
   bool isDone = false;
   onSubmit() {
-    setState(() {
-      isSubmit = true;
-    });
+    if (pinController.text.length != 6) {
+      errorMessage = 'you should fill the otp box';
+    } else {
+      setState(() {
+        isSubmit = true;
+      });
+    }
   }
 
   onOkay() {
@@ -202,9 +207,9 @@ class _Verification_screenState extends State<Verification_screen> {
                 children: <TextSpan>[
                   TextSpan(
                     text: '$secondsRemaining',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 12,
-                        color: resend == true ? primary : ActiveColor,
+                        color: primary,
                         fontFamily: 'DMSans',
                         height: 1),
                   ),
@@ -233,10 +238,22 @@ class _Verification_screenState extends State<Verification_screen> {
               fontSize: 16,
               isText: true,
             ),
+            errorMessage == ""
+                ? Container()
+                : CustomText(
+                    text: errorMessage,
+                    textColor: Colors.red,
+                    alignment: Alignment.center,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: 'DMSans',
+                    align: TextAlign.center,
+                    paddingLeft: 0,
+                    paddingRight: 0),
             const SizedBox(
               height: 40,
             ),
-            const CustomText(
+            CustomText(
                 text: 'Resend',
                 fontSize: 12,
                 fontFamily: 'DMSans',
@@ -245,7 +262,7 @@ class _Verification_screenState extends State<Verification_screen> {
                 fontWeight: FontWeight.w400,
                 paddingLeft: 0,
                 paddingRight: 0,
-                textColor: primary),
+                textColor: resend == true ? primary : ActiveColor),
           ],
         ));
   }

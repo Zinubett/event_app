@@ -1,7 +1,6 @@
 import 'dart:async';
-
+import 'package:pinput/pinput.dart';
 import 'package:event_app/view/screen/question/eventForm_screen.dart';
-import 'package:event_app/view/screen/user/signUp_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
@@ -49,9 +48,16 @@ class _Verification_screenState extends State<Verification_screen> {
   bool enableResend = false;
   late Timer timer;
 
+  late final TextEditingController pinController;
+  late final FocusNode focusNode;
+  late final GlobalKey<FormState> formKey;
+
   @override
-  initState() {
+  void initState() {
     super.initState();
+    formKey = GlobalKey<FormState>();
+    pinController = TextEditingController();
+    focusNode = FocusNode();
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (secondsRemaining != 0) {
         setState(() {
@@ -63,11 +69,34 @@ class _Verification_screenState extends State<Verification_screen> {
         });
       }
     });
+
+    /// In case you need an SMS autofill feature
   }
 
+  @override
+  void dispose() {
+    pinController.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  bool resend = false;
   _buildBody() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    final defaultPinTheme = PinTheme(
+      width: 42,
+      height: 42,
+      textStyle: const TextStyle(
+        fontSize: 12,
+        color: black,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: black),
+      ),
+    );
     return Container(
         height: screenHeight,
         width: screenWidth,
@@ -103,31 +132,60 @@ class _Verification_screenState extends State<Verification_screen> {
             const SizedBox(
               height: 60,
             ),
-            VerificationCode(
-              itemSize: 40,
-              underlineWidth: 1,
-              padding: EdgeInsets.all(4),
-              digitsOnly: true,
-              fullBorder: true,
-              cursorColor: primary,
-              autofocus: true,
-              textStyle:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(color: black),
-              keyboardType: TextInputType.number,
-              underlineColor: primary,
-              length: 6,
-              margin: const EdgeInsets.all(2),
-              onCompleted: (String value) {
-                setState(() {
-                  _code = value;
-                });
-              },
-              onEditing: (bool value) {
-                setState(() {
-                  _onEditing = value;
-                });
-                if (!_onEditing) FocusScope.of(context).unfocus();
-              },
+            Directionality(
+              // Specify direction if desired
+              textDirection: TextDirection.ltr,
+              child: Pinput(
+                length: 6,
+                controller: pinController,
+                focusNode: focusNode,
+                defaultPinTheme: defaultPinTheme,
+                separatorBuilder: (index) => const SizedBox(width: 8),
+                validator: (value) {
+                  return null;
+                  // return secondsRemaining == 0 ? null : 'Pin is incorrect';
+                },
+                hapticFeedbackType: HapticFeedbackType.lightImpact,
+                onCompleted: (pin) {
+                  debugPrint('onCompleted: $pin');
+                },
+                onChanged: (value) {
+                  debugPrint('onChanged: $value');
+                  setState(() {
+                    if (secondsRemaining == 0) {
+                      resend = true;
+                    }
+                  });
+                },
+                showCursor: true,
+                cursor: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 4),
+                      width: 22,
+                      height: 1,
+                      color: primary,
+                    ),
+                  ],
+                ),
+                focusedPinTheme: defaultPinTheme.copyWith(
+                  decoration: defaultPinTheme.decoration!.copyWith(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: black),
+                  ),
+                ),
+                submittedPinTheme: defaultPinTheme.copyWith(
+                  decoration: defaultPinTheme.decoration!.copyWith(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: primary),
+                  ),
+                ),
+                errorPinTheme: defaultPinTheme.copyBorderWith(
+                  border: Border.all(color: Colors.redAccent),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -144,9 +202,9 @@ class _Verification_screenState extends State<Verification_screen> {
                 children: <TextSpan>[
                   TextSpan(
                     text: '$secondsRemaining',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 12,
-                        color: primary,
+                        color: resend == true ? primary : ActiveColor,
                         fontFamily: 'DMSans',
                         height: 1),
                   ),

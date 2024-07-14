@@ -1,6 +1,8 @@
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
+import 'package:event_app/view/widgets/event/feedback_popup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class GridView_item extends StatefulWidget {
   @override
@@ -8,6 +10,26 @@ class GridView_item extends StatefulWidget {
 }
 
 class _GridView_itemState extends State<GridView_item> {
+  Future feedback_popUp(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              titlePadding: EdgeInsets.zero,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              title: Container(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  height: 348,
+                  width: 313,
+                  color: Colors.white,
+                  child: Feedback_popup()),
+            );
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +78,11 @@ class _GridView_itemState extends State<GridView_item> {
                       fontWeight: FontWeight.w400,
                       textColor: Colors.white),
                   Expanded(child: Container()),
-                  Image.asset('images/save.png'),
+                  GestureDetector(
+                      onTap: () {
+                        feedback_popUp(context);
+                      },
+                      child: Image.asset('images/save.png')),
                   const SizedBox(
                     width: 5,
                   ),

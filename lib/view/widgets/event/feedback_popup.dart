@@ -1,20 +1,16 @@
-import 'package:event_app/view/screen/Event/saves.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Feedback_popup extends StatefulWidget {
+  final Function() onSubmit;
+  const Feedback_popup({required this.onSubmit});
   @override
   _Feedback_popupState createState() => _Feedback_popupState();
 }
 
 class _Feedback_popupState extends State<Feedback_popup> {
-  getResult() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Saves_screen()));
-  }
-
   cancel() {
     Navigator.pop(context);
   }
@@ -78,7 +74,6 @@ class _Feedback_popupState extends State<Feedback_popup> {
           child: TextField(
             controller: myController,
             onChanged: (value) {},
-            readOnly: true,
             decoration: const InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
@@ -119,7 +114,7 @@ class _Feedback_popupState extends State<Feedback_popup> {
                   imageUrl: "",
                   buttonColor: primary,
                   textColor: Colors.white,
-                  onPressed: getResult,
+                  onPressed: widget.onSubmit,
                   fontFamily: 'DMSans',
                   buttonWidth: double.infinity,
                   fontSize: 12,

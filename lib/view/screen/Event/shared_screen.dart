@@ -1,16 +1,15 @@
-import 'package:event_app/view/screen/Event/shared_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
+import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:event_app/view/widgets/event/gridView_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class Saves_screen extends StatefulWidget {
+class Shared_screen extends StatefulWidget {
   @override
-  _Saves_screenState createState() => _Saves_screenState();
+  _Shared_screenState createState() => _Shared_screenState();
 }
 
-class _Saves_screenState extends State<Saves_screen> {
+class _Shared_screenState extends State<Shared_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +19,7 @@ class _Saves_screenState extends State<Saves_screen> {
     );
   }
 
+  onShare() {}
   final List<String> tips = [
     '.Plan your event timeline in advance.',
     '.Consider virtual and hybrid event options.',
@@ -36,16 +36,10 @@ class _Saves_screenState extends State<Saves_screen> {
               Expanded(
                 child: Container(),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Shared_screen()));
-                },
-                child: Image.asset(
-                  'images/Group.png',
-                  height: 19.14,
-                  width: 22.17,
-                ),
+              Image.asset(
+                'images/Group.png',
+                height: 19.14,
+                width: 22.17,
               )
             ],
           )),
@@ -77,7 +71,7 @@ class _Saves_screenState extends State<Saves_screen> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
-                            childAspectRatio: (20 / 15),
+                            childAspectRatio: (20 / 18),
                             mainAxisSpacing: 10,
                           ),
                           shrinkWrap: true,
@@ -123,7 +117,24 @@ class _Saves_screenState extends State<Saves_screen> {
                                               ],
                                             ))
                                   ],
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  height: 36,
+                                  child: CustomButton(
+                                    text: 'Share',
+                                    imageUrl: "",
+                                    buttonColor: primary,
+                                    textColor: Colors.white,
+                                    onPressed: onShare,
+                                    fontFamily: 'DMSans',
+                                    buttonWidth: double.infinity,
+                                    fontSize: 12,
+                                    isText: true,
+                                  ),
+                                ),
                               ],
                             );
                           }),

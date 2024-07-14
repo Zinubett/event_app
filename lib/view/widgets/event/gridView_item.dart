@@ -24,10 +24,20 @@ class _GridView_itemState extends State<GridView_item> {
                   height: 348,
                   width: 313,
                   color: Colors.white,
-                  child: Feedback_popup()),
+                  child: Feedback_popup(
+                    onSubmit: onSubmit,
+                  )),
             );
           });
         });
+  }
+
+  bool isFeedback = false;
+  onSubmit() {
+    Navigator.pop(context);
+    setState(() {
+      isFeedback = true;
+    });
   }
 
   @override
@@ -82,7 +92,9 @@ class _GridView_itemState extends State<GridView_item> {
                       onTap: () {
                         feedback_popUp(context);
                       },
-                      child: Image.asset('images/save.png')),
+                      child: Image.asset(isFeedback == false
+                          ? 'images/unSaved.png'
+                          : 'images/save.png')),
                   const SizedBox(
                     width: 5,
                   ),

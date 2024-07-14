@@ -20,7 +20,6 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
     );
   }
 
-  bool isSelected = false;
   final PageController _pageController = PageController();
   AppBar _buildAppBar() {
     return AppBar(
@@ -31,6 +30,13 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
         ));
   }
 
+  final List<String> categories = [
+    'Food',
+    'Venus',
+    'Games',
+    'Planner',
+  ];
+  final List<bool> isSelected = [false, false, false, false];
   Future saved_popUp(BuildContext context) {
     return showDialog(
         context: context,
@@ -51,6 +57,7 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
         });
   }
 
+  int selectedIndex = 0;
   _buildBody() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -67,28 +74,39 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
                 ),
                 Row(children: [
                   ...List.generate(
-                      4,
-                      (index) => Container(
-                            height: 30,
-                            width: 49,
-                            margin: EdgeInsets.only(left: 4, right: 4),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: index == 0 ? ActiveColor : Colors.white,
-                                border: Border.all(
-                                    color: index == 0 ? primary : stroke,
-                                    width: 1)),
-                            child: CustomText(
-                                text: 'Food',
-                                fontSize: 14,
-                                fontFamily: 'DMSans',
-                                align: TextAlign.start,
-                                alignment: Alignment.centerLeft,
-                                paddingLeft: 5,
-                                paddingRight: 0,
-                                fontWeight: FontWeight.w400,
-                                textColor: index == 0 ? primary : black),
-                          )),
+                    categories.length,
+                    (index) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 60,
+                          margin: EdgeInsets.only(left: 4, right: 4),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: index == selectedIndex
+                                  ? ActiveColor
+                                  : Colors.white,
+                              border: Border.all(
+                                  color:
+                                      index == selectedIndex ? primary : stroke,
+                                  width: 1)),
+                          child: CustomText(
+                              text: categories[index],
+                              fontSize: 14,
+                              fontFamily: 'DMSans',
+                              align: TextAlign.center,
+                              alignment: Alignment.center,
+                              paddingLeft: 5,
+                              paddingRight: 0,
+                              fontWeight: FontWeight.w400,
+                              textColor:
+                                  index == selectedIndex ? primary : black),
+                        )),
+                  )
                 ]),
                 const SizedBox(height: 15),
                 Expanded(
@@ -96,14 +114,14 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
                       child: Column(
                     children: [
                       ...List.generate(
-                        4,
+                        categories.length,
                         (index) => Column(
                           children: [
                             const SizedBox(height: 15),
                             Row(
                               children: [
-                                const CustomText(
-                                    text: 'Food',
+                                CustomText(
+                                    text: categories[index],
                                     fontSize: 24,
                                     fontFamily: 'DMSans',
                                     align: TextAlign.start,
@@ -132,15 +150,15 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      if (isSelected == false) {
-                                        isSelected = true;
+                                      if (isSelected[index] == false) {
+                                        isSelected[index] = true;
                                       } else {
-                                        isSelected = false;
+                                        isSelected[index] = false;
                                       }
                                     });
                                   },
                                   child: Image.asset(
-                                    isSelected == false
+                                    isSelected[index] == false
                                         ? 'images/arrow-down.png'
                                         : 'images/arrow-up.png',
                                     width: 24,
@@ -152,7 +170,7 @@ class _EventDetails_screenState extends State<EventDetails_screen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            isSelected == false
+                            isSelected[index] == false
                                 ? GridView.builder(
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(

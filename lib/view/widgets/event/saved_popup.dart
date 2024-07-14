@@ -1,3 +1,4 @@
+import 'package:event_app/view/screen/Event/saves.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
@@ -9,7 +10,15 @@ class Saved_popup extends StatefulWidget {
 }
 
 class _Saved_popupState extends State<Saved_popup> {
-  getResult() {}
+  getResult() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Saves_screen()));
+  }
+
+  cancel() {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +81,7 @@ class _Saved_popupState extends State<Saved_popup> {
                 imageUrl: "",
                 buttonColor: black,
                 textColor: Colors.white,
-                onPressed: getResult,
+                onPressed: cancel,
                 fontFamily: 'DMSans',
                 buttonWidth: double.infinity,
                 fontSize: 12,

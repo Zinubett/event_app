@@ -334,35 +334,32 @@ class _EventForm_screenState extends State<EventForm_screen> {
                                           ),
                                         ),
                                       )),
-                            SizedBox(
-                              height: screenHeight * 1 / 4,
-                            ),
-                            CustomButton(
-                              text: 'Next',
-                              imageUrl: "",
-                              buttonColor: primary,
-                              textColor: Colors.white,
-                              onPressed: onNext,
-                              fontFamily: 'DMSans',
-                              buttonWidth: double.infinity,
-                              fontSize: 16,
-                              isText: true,
-                            ),
-                            sampleQuestions[currentQuestion].errMessage == ''
-                                ? Container()
-                                : CustomText(
-                                    text: sampleQuestions[currentQuestion]
-                                        .errMessage,
-                                    fontSize: 15,
-                                    fontFamily: 'DMSans',
-                                    align: TextAlign.center,
-                                    alignment: Alignment.center,
-                                    paddingLeft: 0,
-                                    paddingRight: 0,
-                                    fontWeight: FontWeight.w400,
-                                    textColor: Colors.red),
                           ]);
-                    }))
+                    })),
+            CustomButton(
+              text: 'Next',
+              imageUrl: "",
+              buttonColor: primary,
+              textColor: Colors.white,
+              onPressed: onNext,
+              fontFamily: 'DMSans',
+              buttonWidth: double.infinity,
+              fontSize: 16,
+              isText: true,
+            ),
+            sampleQuestions[currentQuestion].errMessage == ''
+                ? Container()
+                : CustomText(
+                    text: sampleQuestions[currentQuestion].errMessage,
+                    fontSize: 15,
+                    fontFamily: 'DMSans',
+                    align: TextAlign.center,
+                    alignment: Alignment.center,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    fontWeight: FontWeight.w400,
+                    textColor: Colors.red),
+            const SizedBox(height: 30)
           ],
         ));
   }

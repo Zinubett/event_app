@@ -1,11 +1,12 @@
 import 'package:event_app/Model/question_model.dart';
-import 'package:event_app/view/screen/Event/eventDetails.dart';
+import 'package:event_app/controller/question/eventForm_controller.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:event_app/view/widgets/question/questionContent.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class EventForm_screen extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _EventForm_screenState extends State<EventForm_screen> {
   }
 
   String errMessage = 'You should answer the question first!';
-  int currentQuestion = 0;
+
   late FToast fToast;
   @override
   void initState() {
@@ -75,28 +76,6 @@ class _EventForm_screenState extends State<EventForm_screen> {
     );
   }
 
-  onNext() {
-    if (sampleQuestions[currentQuestion].answer != '') {
-      if (currentQuestion + 1 < sampleQuestions.length) {
-        setState(() {
-          _pageController.nextPage(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-          );
-          currentQuestion++;
-        });
-      } else {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => EventDetails_screen()));
-      }
-    } else {
-      setState(() {
-        sampleQuestions[currentQuestion].errMessage = errMessage;
-        _showToast(errMessage);
-      });
-    }
-  }
-
   final PageController _pageController = PageController();
   AppBar _buildAppBar() {
     return AppBar(
@@ -120,75 +99,95 @@ class _EventForm_screenState extends State<EventForm_screen> {
   _buildBody() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-        height: screenHeight,
-        width: screenWidth,
-        padding: EdgeInsets.only(left: 15, right: 15),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 25,
-            ),
-            Row(children: [
-              ...List.generate(
-                  sampleQuestions.length,
-                  (index) => Container(
-                        height: 6,
-                        width: 34,
-                        margin: EdgeInsets.only(left: 2, right: 2),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: currentQuestion >= index
-                                ? primary
-                                : unActiveColor),
+    return GetBuilder<eventFormController>(
+        init: eventFormController(),
+        builder: (controller) => Container(
+            height: screenHeight,
+            width: screenWidth,
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(children: [
+                  ...List.generate(
+                      sampleQuestions.length,
+                      (index) => Container(
+                            height: 6,
+                            width: 34,
+                            margin: EdgeInsets.only(left: 2, right: 2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: controller.currentQuestion >= index
+                                    ? primary
+                                    : unActiveColor),
+                          )),
+                ]),
+                const SizedBox(height: 15),
+                Expanded(
+                    child: PageView.builder(
+                        controller: _pageController,
+                        pageSnapping: false,
+                        itemCount: sampleQuestions.length,
+                        physics: const BouncingScrollPhysics(),
+                        onPageChanged: (index) {
+                          controller.onPageChanged(index);
+                        },
+                        itemBuilder: (context, index) {
+                          return ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: [
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                CustomText(
+                                    text: sampleQuestions[index].question,
+                                    fontSize: 24,
+                                    fontFamily: 'DMSans',
+                                    align: TextAlign.start,
+                                    alignment: Alignment.centerLeft,
+                                    paddingLeft: 5,
+                                    paddingRight: 0,
+                                    fontWeight: FontWeight.w400,
+                                    textColor: primary),
+                                const SizedBox(height: 25),
+                                QuestionContent(index: index)
+                              ]);
+                        })),
+                Container(
+                  height: 50,
+                  width: screenWidth * 2 / 3,
+                  child: TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.all(15)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(primary),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.black45, width: 1.5),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ))),
+                      onPressed: () {
+                        controller.onNext(
+                            _pageController, _showToast, errMessage);
+                      },
+                      child: const CustomText(
+                        text: 'Next',
+                        alignment: Alignment.center,
+                        textColor: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'DMSans',
+                        fontWeight: FontWeight.w400,
+                        align: TextAlign.center,
+                        paddingLeft: 0,
+                        paddingRight: 0,
                       )),
-            ]),
-            const SizedBox(height: 15),
-            Expanded(
-                child: PageView.builder(
-                    controller: _pageController,
-                    pageSnapping: false,
-                    itemCount: sampleQuestions.length,
-                    physics: const BouncingScrollPhysics(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentQuestion = index;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return ListView(
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            CustomText(
-                                text: sampleQuestions[index].question,
-                                fontSize: 24,
-                                fontFamily: 'DMSans',
-                                align: TextAlign.start,
-                                alignment: Alignment.centerLeft,
-                                paddingLeft: 5,
-                                paddingRight: 0,
-                                fontWeight: FontWeight.w400,
-                                textColor: primary),
-                            const SizedBox(height: 25),
-                            QuestionContent(index: index)
-                          ]);
-                    })),
-            CustomButton(
-              text: 'Next',
-              imageUrl: "",
-              buttonColor: primary,
-              textColor: Colors.white,
-              onPressed: onNext,
-              fontFamily: 'DMSans',
-              buttonWidth: double.infinity,
-              fontSize: 16,
-              isText: true,
-            ),
-            const SizedBox(height: 30)
-          ],
-        ));
+                ),
+                const SizedBox(height: 30)
+              ],
+            )));
   }
 }

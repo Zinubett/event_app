@@ -1,9 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:event_app/Model/question_model.dart';
+import 'package:event_app/controller/question/eventForm_controller.dart';
 import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class QuestionContent extends StatefulWidget {
@@ -86,77 +88,47 @@ class _QuestionContentState extends State<QuestionContent> {
   }
 
   Widget _build_selectableList() {
-    return Column(
-      children: [
-        ...List.generate(
-            sampleQuestions[widget.index].options.length,
-            (optionIndex) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    sampleQuestions[widget.index].answer =
-                        sampleQuestions[widget.index].options[optionIndex];
-                    if (widget.index == 0 &&
-                        (optionIndex == 0 || optionIndex == 1) &&
-                        (sampleQuestions.contains(addQuestions[widget.index]) ==
-                                false ||
-                            sampleQuestions.contains(addQuestions[3]) ==
-                                false)) {
-                      sampleQuestions.add(addQuestions[widget.index]);
-                      sampleQuestions.add(addQuestions[3]);
-                    } else if (widget.index == 3 &&
-                        optionIndex == 0 &&
-                        sampleQuestions.contains(addQuestions[1]) == false) {
-                      sampleQuestions.add(addQuestions[1]);
-                    } else if (widget.index == 0 &&
-                        (optionIndex == 0) &&
-                        sampleQuestions.contains(addQuestions[4]) == false) {
-                      sampleQuestions.add(addQuestions[4]);
-                    } else if ((sampleQuestions
-                                    .contains(addQuestions[widget.index]) ==
-                                true ||
-                            sampleQuestions.contains(addQuestions[3]) ==
-                                true) &&
-                        widget.index == 0 &&
-                        optionIndex == 2) {
-                      sampleQuestions.remove(addQuestions[3]);
-                      sampleQuestions.remove(addQuestions[widget.index]);
-                    } else if (widget.index == 3 &&
-                        optionIndex == 1 &&
-                        sampleQuestions.contains(addQuestions[1]) == true) {
-                      sampleQuestions.remove(addQuestions[1]);
-                    }
-                  });
-                },
-                child: Container(
-                    padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                        color: sampleQuestions[widget.index].answer ==
-                                sampleQuestions[widget.index]
-                                    .options[optionIndex]
-                            ? ActiveColor
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                            width: 1,
-                            color: sampleQuestions[widget.index].answer ==
-                                    sampleQuestions[widget.index]
-                                        .options[optionIndex]
-                                ? borderActiveColor
-                                : stroke)),
-                    child: CustomText(
-                        text:
-                            sampleQuestions[widget.index].options[optionIndex],
-                        fontSize: 14,
-                        fontFamily: 'DMSans',
-                        align: TextAlign.start,
-                        alignment: Alignment.centerLeft,
-                        paddingLeft: 5,
-                        paddingRight: 0,
-                        fontWeight: FontWeight.w400,
-                        textColor: black))))
-      ],
-    );
+    return GetBuilder<eventFormController>(
+        init: eventFormController(),
+        builder: (controller) => Column(
+              children: [
+                ...List.generate(
+                    sampleQuestions[widget.index].options.length,
+                    (optionIndex) => GestureDetector(
+                        onTap: () {
+                          controller.onSelectItem(widget.index, optionIndex);
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.only(bottom: 15),
+                            decoration: BoxDecoration(
+                                color: sampleQuestions[widget.index].answer ==
+                                        sampleQuestions[widget.index]
+                                            .options[optionIndex]
+                                    ? ActiveColor
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    width: 1,
+                                    color:
+                                        sampleQuestions[widget.index].answer ==
+                                                sampleQuestions[widget.index]
+                                                    .options[optionIndex]
+                                            ? borderActiveColor
+                                            : stroke)),
+                            child: CustomText(
+                                text: sampleQuestions[widget.index]
+                                    .options[optionIndex],
+                                fontSize: 14,
+                                fontFamily: 'DMSans',
+                                align: TextAlign.start,
+                                alignment: Alignment.centerLeft,
+                                paddingLeft: 5,
+                                paddingRight: 0,
+                                fontWeight: FontWeight.w400,
+                                textColor: black))))
+              ],
+            ));
   }
 
   Widget _build_textField() {

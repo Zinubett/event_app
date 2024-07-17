@@ -46,7 +46,7 @@ class _SignUp_screenState extends State<SignUp_screen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 25,
+              height: 50,
             ),
             const CustomText(
                 text: 'Sign up',

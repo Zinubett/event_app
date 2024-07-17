@@ -75,6 +75,7 @@ class _Shared_screenState extends State<Shared_screen> {
                             mainAxisSpacing: 10,
                           ),
                           shrinkWrap: true,
+                          physics: ScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           itemCount: 3,
                           itemBuilder: (context, index) {
@@ -122,7 +123,7 @@ class _Shared_screenState extends State<Shared_screen> {
                                   height: 10,
                                 ),
                                 SizedBox(
-                                  height: 36,
+                                  height: 40,
                                   child: CustomButton(
                                     text: 'Share',
                                     imageUrl: "",

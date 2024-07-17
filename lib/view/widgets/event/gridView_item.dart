@@ -1,4 +1,5 @@
 import 'package:event_app/view/theme/theme_color.dart';
+import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:event_app/view/widgets/event/feedback_popup.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,10 @@ class GridView_item extends StatefulWidget {
 }
 
 class _GridView_itemState extends State<GridView_item> {
+  cancel() {
+    Navigator.pop(context);
+  }
+
   Future feedback_popUp(BuildContext context) {
     return showDialog(
         context: context,
@@ -19,13 +24,56 @@ class _GridView_itemState extends State<GridView_item> {
               contentPadding: EdgeInsets.zero,
               titlePadding: EdgeInsets.zero,
               clipBehavior: Clip.antiAliasWithSaveLayer,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               title: Container(
                   padding: EdgeInsets.only(left: 15, right: 15),
-                  height: 348,
+                  height: 290,
                   width: 313,
                   color: Colors.white,
-                  child: Feedback_popup(
-                    onSubmit: onSubmit,
+                  child: Feedback_popup()),
+              content: Container(
+                  height: 65,
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                            child: CustomButton(
+                          text: 'Later',
+                          imageUrl: "",
+                          buttonColor: black,
+                          textColor: Colors.white,
+                          onPressed: cancel,
+                          fontFamily: 'DMSans',
+                          buttonWidth: double.infinity,
+                          fontSize: 12,
+                          isText: true,
+                        )),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: CustomButton(
+                            text: 'Submit',
+                            imageUrl: "",
+                            buttonColor: primary,
+                            textColor: Colors.white,
+                            onPressed: onSubmit,
+                            fontFamily: 'DMSans',
+                            buttonWidth: double.infinity,
+                            fontSize: 12,
+                            isText: true,
+                          ),
+                        )
+                      ],
+                    ),
                   )),
             );
           });

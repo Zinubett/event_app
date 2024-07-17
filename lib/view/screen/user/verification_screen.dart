@@ -109,7 +109,7 @@ class _Verification_screenState extends State<Verification_screen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 40,
+              height: 60,
             ),
             const CustomText(
                 text: 'Verification',

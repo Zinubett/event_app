@@ -32,7 +32,7 @@ class _CustomTextState extends State<CustomText> {
       padding:
           EdgeInsets.only(left: widget.paddingLeft, right: widget.paddingRight),
       child: Text(widget.text,
-          maxLines: 5,
+          maxLines: 10,
           textAlign: widget.align,
           style: TextStyle(
               fontSize: widget.fontSize,

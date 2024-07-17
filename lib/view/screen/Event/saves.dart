@@ -80,6 +80,7 @@ class _Saves_screenState extends State<Saves_screen> {
                             childAspectRatio: (20 / 15),
                             mainAxisSpacing: 10,
                           ),
+                          physics: ScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: 3,

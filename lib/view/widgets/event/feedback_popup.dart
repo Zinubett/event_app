@@ -1,20 +1,13 @@
 import 'package:event_app/view/theme/theme_color.dart';
-import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class Feedback_popup extends StatefulWidget {
-  final Function() onSubmit;
-  const Feedback_popup({required this.onSubmit});
   @override
   _Feedback_popupState createState() => _Feedback_popupState();
 }
 
 class _Feedback_popupState extends State<Feedback_popup> {
-  cancel() {
-    Navigator.pop(context);
-  }
-
   TextEditingController myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,7 +33,7 @@ class _Feedback_popupState extends State<Feedback_popup> {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 15,
         ),
         const CustomText(
             text: 'Feedback',
@@ -53,7 +46,7 @@ class _Feedback_popupState extends State<Feedback_popup> {
             fontWeight: FontWeight.w400,
             textColor: black),
         const SizedBox(
-          height: 15,
+          height: 10,
         ),
         const CustomText(
             text:
@@ -67,7 +60,7 @@ class _Feedback_popupState extends State<Feedback_popup> {
             fontWeight: FontWeight.w400,
             textColor: black),
         const SizedBox(
-          height: 30,
+          height: 15,
         ),
         SizedBox(
           height: 80,
@@ -86,42 +79,6 @@ class _Feedback_popupState extends State<Feedback_popup> {
                     TextStyle(fontSize: 12, color: gray, fontFamily: 'DMSans')),
             style: const TextStyle(
                 fontSize: 12, color: gray, fontFamily: 'DMSans'),
-          ),
-        ),
-        SizedBox(
-          height: 36,
-          child: Row(
-            children: [
-              Expanded(
-                  child: CustomButton(
-                text: 'Later',
-                imageUrl: "",
-                buttonColor: black,
-                textColor: Colors.white,
-                onPressed: cancel,
-                fontFamily: 'DMSans',
-                buttonWidth: double.infinity,
-                fontSize: 12,
-                isText: true,
-              )),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                flex: 2,
-                child: CustomButton(
-                  text: 'Submit',
-                  imageUrl: "",
-                  buttonColor: primary,
-                  textColor: Colors.white,
-                  onPressed: widget.onSubmit,
-                  fontFamily: 'DMSans',
-                  buttonWidth: double.infinity,
-                  fontSize: 12,
-                  isText: true,
-                ),
-              )
-            ],
           ),
         ),
       ],

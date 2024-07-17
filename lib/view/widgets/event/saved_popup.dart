@@ -1,6 +1,4 @@
-import 'package:event_app/view/screen/Event/saves.dart';
 import 'package:event_app/view/theme/theme_color.dart';
-import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -10,15 +8,6 @@ class Saved_popup extends StatefulWidget {
 }
 
 class _Saved_popupState extends State<Saved_popup> {
-  getResult() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Saves_screen()));
-  }
-
-  cancel() {
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,42 +59,6 @@ class _Saved_popupState extends State<Saved_popup> {
             textColor: black),
         const SizedBox(
           height: 30,
-        ),
-        SizedBox(
-          height: 36,
-          child: Row(
-            children: [
-              Expanded(
-                  child: CustomButton(
-                text: 'Cancel',
-                imageUrl: "",
-                buttonColor: black,
-                textColor: Colors.white,
-                onPressed: cancel,
-                fontFamily: 'DMSans',
-                buttonWidth: double.infinity,
-                fontSize: 12,
-                isText: true,
-              )),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                flex: 2,
-                child: CustomButton(
-                  text: 'View Results',
-                  imageUrl: "",
-                  buttonColor: primary,
-                  textColor: Colors.white,
-                  onPressed: getResult,
-                  fontFamily: 'DMSans',
-                  buttonWidth: double.infinity,
-                  fontSize: 12,
-                  isText: true,
-                ),
-              )
-            ],
-          ),
         ),
       ],
     );

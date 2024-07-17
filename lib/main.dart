@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Event App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: primary),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent),
         useMaterial3: true,
       ),
       home: Splash_screen(),

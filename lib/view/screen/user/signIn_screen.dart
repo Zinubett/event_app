@@ -253,10 +253,7 @@ class _SignIn_screenState extends State<SignIn_screen> {
                     width: double.infinity,
                     child: GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp_screen()));
+                          Get.off(SignUp_screen());
                         },
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,

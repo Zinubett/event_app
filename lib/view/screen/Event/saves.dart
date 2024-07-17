@@ -3,7 +3,7 @@ import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:event_app/view/widgets/event/gridView_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class Saves_screen extends StatefulWidget {
   @override
@@ -38,8 +38,7 @@ class _Saves_screenState extends State<Saves_screen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Shared_screen()));
+                  Get.to(Shared_screen());
                 },
                 child: Image.asset(
                   'images/Group.png',

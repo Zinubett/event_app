@@ -5,7 +5,7 @@ import 'package:event_app/view/theme/theme_color.dart';
 import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Verification_screen extends StatefulWidget {
   @override
@@ -24,9 +24,51 @@ class _Verification_screenState extends State<Verification_screen> {
   String errorMessage = "";
   bool isSubmit = false;
   bool isDone = false;
+  late FToast fToast;
+
+  _showToast(String msg) {
+    Widget toast = Container(
+      height: 80,
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.redAccent,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+            size: 25,
+          ),
+          const SizedBox(
+            width: 12.0,
+          ),
+          CustomText(
+              text: msg,
+              fontSize: 16,
+              fontFamily: 'DMSans',
+              align: TextAlign.center,
+              alignment: Alignment.center,
+              paddingLeft: 0,
+              paddingRight: 0,
+              fontWeight: FontWeight.w500,
+              textColor: Colors.white),
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: const Duration(seconds: 2),
+    );
+  }
+
   onSubmit() {
     if (pinController.text.length != 6) {
-      errorMessage = 'you should fill the otp box';
+      errorMessage = 'Please fill in the OTP box!';
+      _showToast(errorMessage);
     } else {
       setState(() {
         isSubmit = true;
@@ -75,7 +117,9 @@ class _Verification_screenState extends State<Verification_screen> {
       }
     });
 
-    /// In case you need an SMS autofill feature
+    fToast = FToast();
+    // if you want to use context from globally instead of content we need to pass navigatorKey.currentContext!
+    fToast.init(context);
   }
 
   @override
@@ -238,18 +282,6 @@ class _Verification_screenState extends State<Verification_screen> {
               fontSize: 16,
               isText: true,
             ),
-            errorMessage == ""
-                ? Container()
-                : CustomText(
-                    text: errorMessage,
-                    textColor: Colors.red,
-                    alignment: Alignment.center,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    fontFamily: 'DMSans',
-                    align: TextAlign.center,
-                    paddingLeft: 0,
-                    paddingRight: 0),
             const SizedBox(
               height: 40,
             ),

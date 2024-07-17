@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EventForm_screen extends StatefulWidget {
   @override
@@ -23,8 +24,59 @@ class _EventForm_screenState extends State<EventForm_screen> {
     );
   }
 
-  String errMessage = 'you should answer to the question first!';
+  String errMessage = 'You should answer the question first!';
   int currentQuestion = 0;
+  late FToast fToast;
+  @override
+  void initState() {
+    super.initState();
+
+    fToast = FToast();
+    // if you want to use context from globally instead of content we need to pass navigatorKey.currentContext!
+    fToast.init(context);
+  }
+
+  _showToast(String msg) {
+    Widget toast = Container(
+      height: 100,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.redAccent,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+            size: 25,
+          ),
+          const SizedBox(
+            width: 10.0,
+          ),
+          Container(
+            child: CustomText(
+                text: msg,
+                fontSize: 14,
+                fontFamily: 'DMSans',
+                align: TextAlign.center,
+                alignment: Alignment.centerLeft,
+                paddingLeft: 0,
+                paddingRight: 0,
+                fontWeight: FontWeight.w400,
+                textColor: Colors.white),
+          ),
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: const Duration(seconds: 2),
+    );
+  }
+
   onNext() {
     if (sampleQuestions[currentQuestion].answer != '') {
       if (currentQuestion + 1 < sampleQuestions.length) {
@@ -42,6 +94,7 @@ class _EventForm_screenState extends State<EventForm_screen> {
     } else {
       setState(() {
         sampleQuestions[currentQuestion].errMessage = errMessage;
+        _showToast(errMessage);
       });
     }
   }
@@ -347,18 +400,6 @@ class _EventForm_screenState extends State<EventForm_screen> {
               fontSize: 16,
               isText: true,
             ),
-            sampleQuestions[currentQuestion].errMessage == ''
-                ? Container()
-                : CustomText(
-                    text: sampleQuestions[currentQuestion].errMessage,
-                    fontSize: 15,
-                    fontFamily: 'DMSans',
-                    align: TextAlign.center,
-                    alignment: Alignment.center,
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    fontWeight: FontWeight.w400,
-                    textColor: Colors.red),
             const SizedBox(height: 30)
           ],
         ));

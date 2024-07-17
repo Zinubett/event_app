@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'package:event_app/controller/user/verification_controller.dart';
+import 'package:event_app/view/widgets/event/congrats.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:pinput/pinput.dart';
-import 'package:event_app/view/screen/question/eventForm_screen.dart';
 import 'package:event_app/view/theme/theme_color.dart';
-import 'package:event_app/view/widgets/common.dart/custom_button.dart';
 import 'package:event_app/view/widgets/common.dart/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,17 +16,19 @@ class Verification_screen extends StatefulWidget {
 class _Verification_screenState extends State<Verification_screen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: isSubmit == false ? _buildBody() : congrats(),
-    );
+    return GetBuilder<verificationController>(
+        init: verificationController(),
+        builder: (controller) => Scaffold(
+              backgroundColor: Colors.white,
+              body: controller.isSubmit == false ? _buildBody() : Congrats(),
+            ));
   }
 
-  String errorMessage = "";
-  bool isSubmit = false;
-  bool isDone = false;
-  late FToast fToast;
+  late Timer timer;
 
+  late final FocusNode focusNode;
+  late final GlobalKey<FormState> formKey;
+  late FToast fToast;
   _showToast(String msg) {
     Widget toast = Container(
       height: 80,
@@ -66,45 +69,13 @@ class _Verification_screenState extends State<Verification_screen> {
     );
   }
 
-  onSubmit() {
-    if (pinController.text.length != 6) {
-      errorMessage = 'Please fill in the OTP box!';
-      _showToast(errorMessage);
-    } else {
-      setState(() {
-        isSubmit = true;
-      });
-    }
-  }
-
-  onOkay() {
-    setState(() {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => EventForm_screen()));
-    });
-  }
-
-  onDone() {
-    setState(() {
-      isDone = true;
-    });
-  }
-
-  bool _onEditing = true;
-  String? _code;
-  int secondsRemaining = 30;
-  bool enableResend = false;
-  late Timer timer;
-
   late final TextEditingController pinController;
-  late final FocusNode focusNode;
-  late final GlobalKey<FormState> formKey;
 
   @override
   void initState() {
     super.initState();
     formKey = GlobalKey<FormState>();
-    pinController = TextEditingController();
+
     focusNode = FocusNode();
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (secondsRemaining != 0) {
@@ -117,7 +88,7 @@ class _Verification_screenState extends State<Verification_screen> {
         });
       }
     });
-
+    pinController = TextEditingController();
     fToast = FToast();
     // if you want to use context from globally instead of content we need to pass navigatorKey.currentContext!
     fToast.init(context);
@@ -130,7 +101,9 @@ class _Verification_screenState extends State<Verification_screen> {
     super.dispose();
   }
 
-  bool resend = false;
+  int secondsRemaining = 30;
+  bool enableResend = false;
+
   _buildBody() {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -201,11 +174,6 @@ class _Verification_screenState extends State<Verification_screen> {
                 },
                 onChanged: (value) {
                   debugPrint('onChanged: $value');
-                  setState(() {
-                    if (secondsRemaining == 0) {
-                      resend = true;
-                    }
-                  });
                 },
                 showCursor: true,
                 cursor: Column(
@@ -272,17 +240,42 @@ class _Verification_screenState extends State<Verification_screen> {
             const SizedBox(
               height: 35,
             ),
-            CustomButton(
-              text: 'Submit',
-              imageUrl: "",
-              buttonColor: primary,
-              textColor: Colors.white,
-              onPressed: onSubmit,
-              fontFamily: 'DMSans',
-              buttonWidth: screenWidth * 2 / 3,
-              fontSize: 16,
-              isText: true,
-            ),
+            GetBuilder<verificationController>(
+                init: verificationController(),
+                builder: (controller) => Container(
+                      height: 50,
+                      width: screenWidth * 2 / 3,
+                      child: TextButton(
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  EdgeInsets.all(15)),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(primary),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: Colors.black45, width: 1.5),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ))),
+                          onPressed: () {
+                            controller.onSubmit(
+                                fToast as FToast,
+                                pinController as TextEditingController,
+                                _showToast);
+                          },
+                          child: const CustomText(
+                            text: 'Submit',
+                            alignment: Alignment.center,
+                            textColor: Colors.white,
+                            fontSize: 16,
+                            fontFamily: 'DMSans',
+                            fontWeight: FontWeight.w400,
+                            align: TextAlign.center,
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                          )),
+                    )),
             const SizedBox(
               height: 40,
             ),
@@ -295,70 +288,7 @@ class _Verification_screenState extends State<Verification_screen> {
                 fontWeight: FontWeight.w400,
                 paddingLeft: 0,
                 paddingRight: 0,
-                textColor: resend == true ? primary : ActiveColor),
-          ],
-        ));
-  }
-
-  Widget congrats() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return Padding(
-        padding: EdgeInsets.only(left: 15, right: 15),
-        child: Column(
-          children: [
-            SizedBox(
-              height: screenHeight * 1 / 4,
-            ),
-            Image(
-              image: isDone == false
-                  ? AssetImage("images/Successmark.png")
-                  : AssetImage("images/Frame.png"),
-              width: 200,
-              height: 200,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            CustomText(
-                text: isDone == false ? 'Congratulations!' : 'Welcome!',
-                alignment: Alignment.center,
-                fontWeight: FontWeight.w500,
-                textColor: primary,
-                fontSize: 24,
-                fontFamily: 'DMSans',
-                align: TextAlign.center,
-                paddingLeft: 0,
-                paddingRight: 0),
-            SizedBox(
-              height: 10,
-            ),
-            CustomText(
-                text: isDone == false
-                    ? 'Your email has been verified, you can now start'
-                    : 'Thanks for downloading our app! We’re actively working on enhancing our functionality in these early stages. You’re among the first users and we appreciate any feedback you have.',
-                alignment: Alignment.center,
-                fontWeight: FontWeight.w400,
-                textColor: black,
-                fontSize: 14,
-                fontFamily: 'DMSans',
-                align: TextAlign.center,
-                paddingLeft: isDone == false ? 65 : 0,
-                paddingRight: isDone == false ? 65 : 0),
-            const SizedBox(
-              height: 35,
-            ),
-            CustomButton(
-              text: isDone == false ? 'Done' : 'Okay',
-              imageUrl: "",
-              buttonColor: primary,
-              textColor: Colors.white,
-              onPressed: isDone == false ? onDone : onOkay,
-              fontFamily: 'DMSans',
-              buttonWidth: screenWidth * 2 / 3,
-              fontSize: 16,
-              isText: true,
-            ),
+                textColor: enableResend == true ? primary : ActiveColor),
           ],
         ));
   }

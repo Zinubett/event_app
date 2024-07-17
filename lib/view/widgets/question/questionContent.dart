@@ -85,28 +85,6 @@ class _QuestionContentState extends State<QuestionContent> {
     );
   }
 
-  onSelect(int optionIndex) {
-    setState(() {
-      sampleQuestions[widget.index].answer =
-          sampleQuestions[widget.index].options[optionIndex];
-      if (widget.index == 0 &&
-          (optionIndex == 0 || optionIndex == 1) &&
-          (sampleQuestions.contains(addQuestions[widget.index]) == false ||
-              sampleQuestions.contains(addQuestions[3]) == false)) {
-        sampleQuestions.add(addQuestions[widget.index]);
-        sampleQuestions.add(addQuestions[3]);
-      } else if (widget.index == 3 &&
-          optionIndex == 0 &&
-          sampleQuestions.contains(addQuestions[1]) == false) {
-        sampleQuestions.add(addQuestions[1]);
-      } else if (widget.index == 0 &&
-          (optionIndex == 0) &&
-          sampleQuestions.contains(addQuestions[4]) == false) {
-        sampleQuestions.add(addQuestions[4]);
-      }
-    });
-  }
-
   Widget _build_selectableList() {
     return Column(
       children: [
@@ -114,7 +92,40 @@ class _QuestionContentState extends State<QuestionContent> {
             sampleQuestions[widget.index].options.length,
             (optionIndex) => GestureDetector(
                 onTap: () {
-                  onSelect(optionIndex);
+                  setState(() {
+                    sampleQuestions[widget.index].answer =
+                        sampleQuestions[widget.index].options[optionIndex];
+                    if (widget.index == 0 &&
+                        (optionIndex == 0 || optionIndex == 1) &&
+                        (sampleQuestions.contains(addQuestions[widget.index]) ==
+                                false ||
+                            sampleQuestions.contains(addQuestions[3]) ==
+                                false)) {
+                      sampleQuestions.add(addQuestions[widget.index]);
+                      sampleQuestions.add(addQuestions[3]);
+                    } else if (widget.index == 3 &&
+                        optionIndex == 0 &&
+                        sampleQuestions.contains(addQuestions[1]) == false) {
+                      sampleQuestions.add(addQuestions[1]);
+                    } else if (widget.index == 0 &&
+                        (optionIndex == 0) &&
+                        sampleQuestions.contains(addQuestions[4]) == false) {
+                      sampleQuestions.add(addQuestions[4]);
+                    } else if ((sampleQuestions
+                                    .contains(addQuestions[widget.index]) ==
+                                true ||
+                            sampleQuestions.contains(addQuestions[3]) ==
+                                true) &&
+                        widget.index == 0 &&
+                        optionIndex == 2) {
+                      sampleQuestions.remove(addQuestions[3]);
+                      sampleQuestions.remove(addQuestions[widget.index]);
+                    } else if (widget.index == 3 &&
+                        optionIndex == 1 &&
+                        sampleQuestions.contains(addQuestions[1]) == true) {
+                      sampleQuestions.remove(addQuestions[1]);
+                    }
+                  });
                 },
                 child: Container(
                     padding: const EdgeInsets.all(15),

@@ -29,6 +29,7 @@ class _Verification_screenState extends State<Verification_screen> {
   _showToast(String msg) {
     Widget toast = Container(
       height: 80,
+      margin: const EdgeInsets.only(top: 80),
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
@@ -60,7 +61,7 @@ class _Verification_screenState extends State<Verification_screen> {
     );
     fToast.showToast(
       child: toast,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
       toastDuration: const Duration(seconds: 2),
     );
   }

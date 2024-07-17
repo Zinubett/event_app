@@ -70,7 +70,7 @@ class _EventForm_screenState extends State<EventForm_screen> {
     );
     fToast.showToast(
       child: toast,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
       toastDuration: const Duration(seconds: 2),
     );
   }
